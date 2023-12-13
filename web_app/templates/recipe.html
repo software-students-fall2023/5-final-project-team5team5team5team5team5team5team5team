@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{recipe.title}} - Team5</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href="{{ url_for('static', filename='css/recipe.css') }}" as="style" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}" />
+</head>
+
+<body>
+    <main style="display: flex; flex-direction: column; align-items: center;">
+        <h1 id="recipe-title">{{recipe.title}}</h1>
+        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+            <div>
+                <span class="recipe-hint-icon">⏲️</span>
+                <span class="recipe-hint">{{recipe.readyInMinutes}} minutes</span>    
+            </div>
+            <span class="recipe-hint-sep">‧</span>
+            <div>
+                <span class="recipe-hint-icon">🍽️</span>
+                <span class="recipe-hint">{{recipe.servings}} servings</span>
+            </div>
+        </div>
+        <hr class="main-sep">
+        <img id="recipe-image" src="{{recipe.image}}">
+    </main>
+    
+</body>
+
+</html>

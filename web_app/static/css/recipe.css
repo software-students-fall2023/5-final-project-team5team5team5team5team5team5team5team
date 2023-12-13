@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    background-color: white;
+    color: #242424;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji";
+}
+
+#recipe-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    max-width: 700px;
+    margin: 20px 24px 10px;
+}
+
+#recipe-image {
+    max-width: 450px;
+    width: 100vw;
+}
+
+.main-sep {
+    margin: 20px;
+    height: 1px;
+    width: 300px;
+    border: none;
+    border-top: 2px solid lightgray;
+}
+
+@media (max-width: 530px) {
+    #recipe-title {
+        font-size: 2rem;
+    }
+
+    #recipe-image {
+        max-width: 100vw;
+    }
+
+    .main-sep {
+        width: calc(100vw - 40px);
+    }
+}
+
+.recipe-hint {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.recipe-hint-icon {
+    font-size: 1.5em;
+    margin: 0px 5px 0px 0px;
+}
+
+.recipe-hint-sep {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px 10px;
+}

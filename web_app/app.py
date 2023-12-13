@@ -40,12 +40,13 @@ def index():
 
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id=639413):
-    res = fetch_spoon_api(
-        f"https://api.spoonacular.com/recipes/{recipe_id}/information",
-        { "includeNutrition": True }
-    )
-    print(res)
-    pass
+    from recipe_test_res import RECIPE_TEST_RES
+    # res = fetch_spoon_api(
+    #     f"https://api.spoonacular.com/recipes/{recipe_id}/information",
+    #     { "includeNutrition": True }
+    # )
+    res = RECIPE_TEST_RES    
+    return render_template("recipe.html", recipe=res)
 
 
 if __name__ == "__main__":
