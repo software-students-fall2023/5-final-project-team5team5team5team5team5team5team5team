@@ -20,11 +20,9 @@ jobs:
         if: ${{ hashFiles('**/*.py') != '' }}
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pipenv pylint
+          python -m pip install pipenv
           pipenv lock
-          pipenv sync --dev --python $(which python)
-          pipenv shell --fancy --python $(which python)
-          pipenv install python-dotenv
+          pipenv sync --dev --python $(which python)  # Sync all dependencies, including Flask
       
       # - name: Lint with pylint
       #   if: ${{ hashFiles('**/*.py') != '' }}
