@@ -127,12 +127,6 @@ body {
     }
 }
 
-#nutrient-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
 hr.dot-sep {
     flex-grow: 1;
     margin: 0 0 .2rem 0;
@@ -148,6 +142,10 @@ hr.dot-sep {
     margin-bottom: 3px;
 }
 
+#nutrient-list > li:last-child {
+    margin-bottom: 0;
+}
+
 #nutrient-list > li > span:first-child {
     font-weight: 500;
 }
@@ -155,4 +153,21 @@ hr.dot-sep {
 #nutrient-list > li:first-child > span {
     font-size: 1.5rem;
     font-weight: bold
+}
+
+#ingredient-list > li {
+    margin-bottom: 15px;
+}
+
+#ingredient-list > li:last-child {
+    margin-bottom: 0;
+}
+
+.ingredient-label {
+    font-size: 1.05rem;
+}
+
+.ingredient-check:checked + .ingredient-label {
+    text-decoration: line-through;
+    opacity: 0.5;
 }

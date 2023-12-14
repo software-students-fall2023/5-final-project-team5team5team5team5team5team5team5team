@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <main style="display: flex; flex-direction: column; align-items: center;">
+    <main style="display: flex; flex-direction: column; align-items: center; margin-bottom: 30px;">
         <h1 id="recipe-title">{{recipe.title}}</h1>
         <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; margin: 0px 24px;">
             <div>
@@ -54,7 +54,7 @@
             <div id="tab-content">
                 <div id="nutrition-info" style="display: block;">
                     <p style="margin: 0 0 5px 0; color: dimgray;"><i>(per serving)</i></p>
-                    <ul id="nutrient-list">
+                    <ul id="nutrient-list" style="margin: 0; padding: 0; list-style-type: none;">
                         <li><span>Calories</span><span>{{nutrition.calories.amt}}</span></li>
                         <li><span>Fat</span><hr class="dot-sep"><span>{{nutrition.fat.amt}} {{nutrition.fat.units}}</span></li>
                         <li><span>Protein</span><hr class="dot-sep"><span>{{nutrition.protein.amt}} {{nutrition.protein.units}}</span></li>
@@ -65,7 +65,14 @@
                     </ul>
                 </div>
                 <div id="ingredients" style="display: none;">
-                    <p>blah ingredients</p>
+                    <ul id="ingredient-list" style="margin: 5px 0 0 0; padding: 0; list-style-type: none;">
+                    {%for ingredient in recipe.extendedIngredients%}
+                        <li>
+                            <input type="checkbox" id="{{ingredient.id}}" class="ingredient-check">
+                            <label for="{{ingredient.id}}" class="ingredient-label">{{ingredient.original}}</label>
+                        </li>
+                    {% endfor %}
+                    </ul>
                 </div>
                 <div id="instructions" style="display: none;">
                     <p>instructions instructionsinstructions!!</p>
