@@ -93,7 +93,7 @@ body {
 
 #tab-strip > a.tab-selected {
     border-bottom: 0;
-    color: rgb(0, 73, 183);
+    color: rgb(0, 82, 183);
     background-color: white;
     text-decoration: none;
 }
@@ -157,17 +157,24 @@ hr.dot-sep {
 
 #ingredient-list > li {
     margin-bottom: 15px;
+    font-size: 1.05rem;
 }
 
 #ingredient-list > li:last-child {
     margin-bottom: 0;
 }
 
-.ingredient-label {
-    font-size: 1.05rem;
-}
-
 .ingredient-check:checked + .ingredient-label {
     text-decoration: line-through;
     opacity: 0.5;
+}
+
+#instruction-list > li {
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.4;
+}
+
+#instruction-list > li:last-child {
+    margin-bottom: 0;
 }

@@ -39,7 +39,7 @@
             </div>
         {% endfor %}
         {% for dishType in recipe.dishTypes%}
-            <div class="recipe-tag" style="color: dimgray; background-color: rgb(255, 255, 255); border-color: rgb(230, 230, 230);">
+            <div class="recipe-tag" style="color: dimgray; background-color: rgb(255, 255, 255); border-color: rgb(220, 220, 220);">
                 <span>{{dishType}}</span>
             </div>
         {% endfor %}
@@ -66,7 +66,7 @@
                 </div>
                 <div id="ingredients" style="display: none;">
                     <ul id="ingredient-list" style="margin: 5px 0 0 0; padding: 0; list-style-type: none;">
-                    {%for ingredient in recipe.extendedIngredients%}
+                    {% for ingredient in recipe.extendedIngredients %}
                         <li>
                             <input type="checkbox" id="{{ingredient.id}}" class="ingredient-check">
                             <label for="{{ingredient.id}}" class="ingredient-label">{{ingredient.original}}</label>
@@ -75,7 +75,14 @@
                     </ul>
                 </div>
                 <div id="instructions" style="display: none;">
-                    <p>instructions instructionsinstructions!!</p>
+                    <ol id="instruction-list" style="margin: 5px 0 0 0; padding: 0; list-style-type: none;">
+                        {% for step in recipe.analyzedInstructions[0].steps %}
+                            <li>
+                                <span style="font-size: 1.5em; font-weight: bold; margin-right: 8px;">{{step.number}}</span>
+                                <span>{{step.step}}</span>
+                            </li>
+                        {% endfor %}
+                    </ol>
                 </div>
             </div>
         </div>
