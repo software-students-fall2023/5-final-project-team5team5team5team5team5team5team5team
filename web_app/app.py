@@ -39,7 +39,7 @@ def index():
     return render_template("index.html")
 
 # target nutrients
-NUTRIENTS = {"Calories", "Fat", "Sodium", "Carbohydrates", "Sugar", "Protein", "Fiber"}
+NUTRIENTS = {"calories", "fat", "sodium", "carbohydrates", "sugar", "protein", "fiber"}
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id=639413):
     from recipe_test_res import RECIPE_TEST_RES
@@ -48,14 +48,21 @@ def recipe(recipe_id=639413):
     #     { "includeNutrition": True }
     # )
     res = RECIPE_TEST_RES
+
+    # nutrients
     nutrition = {
         nutr["name"].lower(): {
             "amt": round(nutr["amount"]),
             "units": nutr["unit"],
         }
         for nutr in res["nutrition"]["nutrients"]
-        if nutr["name"] in NUTRIENTS
+        if nutr["name"].lower() in NUTRIENTS
     }
+    # missing nutrients
+    for nutrname in NUTRIENTS:
+        if nutrname not in nutrition:
+            nutrition[nutrname] = {"amt": "-", "units": "-"}
+
     return render_template("recipe.html", recipe=res, nutrition=nutrition)
 
 
