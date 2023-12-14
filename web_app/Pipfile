@@ -6,10 +6,10 @@ name = "pypi"
 [packages]
 flask = "*"
 pymongo = "*"
-
-[dev-packages]
 pylint = "*"
 black = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.12"
