@@ -180,6 +180,11 @@ hr.dot-sep {
     opacity: 0.5;
 }
 
+.ingredient-check,
+.ingredient-label {
+    cursor: pointer;
+}
+
 #instruction-list > li {
     margin-bottom: 20px;
     font-size: 1.05rem;
