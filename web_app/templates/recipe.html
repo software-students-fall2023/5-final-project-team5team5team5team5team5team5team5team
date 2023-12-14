@@ -78,10 +78,13 @@
                     <ol id="instruction-list" style="margin: 5px 0 0 0; padding: 0; list-style-type: none;">
                         {% for step in recipe.analyzedInstructions[0].steps %}
                             <li>
-                                <span style="font-size: 1.5em; font-weight: bold; margin-right: 8px;">{{step.number}}</span>
+                                <span style="font-size: 1.5rem; font-weight: bold; margin-right: 8px;">{{step.number}}</span>
                                 <span>{{step.step}}</span>
                             </li>
                         {% endfor %}
+                        <li style="padding: 15px 7px 0 0; color: dimgray; font-style: italic; font-size: 1rem; width: auto; text-align: right;">
+                            <span>Recipe courtesy of <a href="{{recipe.sourceUrl}}" style="color: inherit;">{{recipe.creditsText}}</a></span>
+                        </li>
                     </ol>
                 </div>
             </div>
