@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preload" href="{{ url_for('static', filename='css/recipe.css') }}" as="style" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}" />
+    <script src="{{ url_for('static', filename='js/recipe.js') }}" async></script>
 </head>
 
 <body>
@@ -46,12 +47,12 @@
         <hr class="main-sep">
         <div id="tab-container">
             <div id="tab-strip" style="display: flex;">
-                <a href="#nutrition-info" class="tab-selected">Nutrition</a>
-                <a href="#ingredients">Ingredients</a>
-                <a href="#instructions">Directions</a>
+                <a class="tab tab-selected" tab-target="#nutrition-info">Nutrition</a>
+                <a class="tab" tab-target="#ingredients">Ingredients</a>
+                <a class="tab" tab-target="#instructions">Directions</a>
             </div>
             <div id="tab-content">
-                <div id="nutrition-info">
+                <div id="nutrition-info" style="display: block;">
                     <p style="margin: 0 0 5px 0; color: dimgray;"><i>(per serving)</i></p>
                     <ul id="nutrient-list">
                         <li><span>Calories</span><span>{{nutrition.calories.amt}}</span></li>
