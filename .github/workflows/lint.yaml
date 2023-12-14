@@ -20,21 +20,22 @@ jobs:
         if: ${{ hashFiles('**/*.py') != '' }}
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pipenv pylint
+          python -m pip install pipenv
+          # python -m pip install pipenv pylint
           pipenv lock
           pipenv sync --dev --python $(which python)
           pipenv shell --fancy --python $(which python)
           pipenv install python-dotenv
       
-      # - name: Lint with pylint
-      #   if: ${{ hashFiles('**/*.py') != '' }}
-      #   run: |
-      #     pipenv run pylint **/*.py
-
       - name: Lint with pylint
         if: ${{ hashFiles('**/*.py') != '' }}
         run: |
-          pylint $(find . -name '*.py')  # Use find command for Python files
+          pipenv run pylint **/*.py
+
+      # - name: Lint with pylint
+      #   if: ${{ hashFiles('**/*.py') != '' }}
+      #   run: |
+      #     pylint $(find . -name '*.py')  # Use find command for Python files
 
       - name: Format with black
         if: ${{ hashFiles('**/*.py') != '' }}
