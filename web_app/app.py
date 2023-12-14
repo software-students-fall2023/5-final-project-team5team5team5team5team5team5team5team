@@ -38,6 +38,8 @@ def index():
     """Renders home page"""
     return render_template("index.html")
 
+# target nutrients
+NUTRIENTS = {"Calories", "Fat", "Sodium", "Carbohydrates", "Sugar", "Protein", "Fiber"}
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id=639413):
     from recipe_test_res import RECIPE_TEST_RES
@@ -45,8 +47,16 @@ def recipe(recipe_id=639413):
     #     f"https://api.spoonacular.com/recipes/{recipe_id}/information",
     #     { "includeNutrition": True }
     # )
-    res = RECIPE_TEST_RES    
-    return render_template("recipe.html", recipe=res)
+    res = RECIPE_TEST_RES
+    nutrition = {
+        nutr["name"].lower(): {
+            "amt": round(nutr["amount"]),
+            "units": nutr["unit"],
+        }
+        for nutr in res["nutrition"]["nutrients"]
+        if nutr["name"] in NUTRIENTS
+    }
+    return render_template("recipe.html", recipe=res, nutrition=nutrition)
 
 
 if __name__ == "__main__":

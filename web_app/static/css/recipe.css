@@ -2,7 +2,7 @@ body {
     margin: 0;
     background-color: white;
     color: #242424;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,"Apple Color remoji", "Segoe UI remoji";
 }
 
 #recipe-title {
@@ -40,17 +40,118 @@ body {
 }
 
 .recipe-hint {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-style: italic;
 }
 
 .recipe-hint-icon {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     margin: 0px 5px 0px 0px;
 }
 
 .recipe-hint-sep {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 0px 10px;
+}
+
+.recipe-tag {
+    font-size: 1.1rem;
+    border-radius: 1000px;
+    border: 2px solid;
+    padding: 3px 10px 5px;
+    font-weight: 500;
+    color: black;
+}
+
+#tab-container {
+    max-width: 550px;
+    width: 100vw;
+    border: 2px solid lightgray;
+    border-radius: 6px;
+}
+
+#tab-strip > a {
+    width: calc(100% / 3);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 2.2rem;
+    text-decoration: none;
+    color: rgb(69, 69, 69);
+    background-color: rgb(245, 245, 245);
+    border: solid lightgray;
+    border-width: 0px 0px 2px 2px;
+}
+
+#tab-strip > a:hover {
+    background-color: rgb(224, 229, 237);
+    text-decoration: underline;
+}
+
+#tab-strip > a.tab-selected {
+    border-bottom: 0;
+    color: rgb(0, 58, 183);
+    background-color: white;
+    text-decoration: none;
+}
+
+#tab-strip a:first-child {
+    padding-left: 2px;
+    border-left: 0;
+    border-top-left-radius: 6px;
+}
+
+#tab-strip a:last-child {
+    border-top-right-radius: 6px;
+}
+
+#tab-content {
+    padding: 15px 15px;
+}
+
+@media (max-width: 640px) {
+    .recipe-tag {
+        font-size: 1rem;
+    }    
+
+    #tab-container {
+        max-width: calc(100vw - 30px);
+    }
+
+    #tab-strip > a {
+        font-size: 1.05rem;
+        line-height: 2rem;
+    }
+}
+
+#nutrient-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+hr.dot-sep {
+    flex-grow: 1;
+    margin: 0 0 .2rem 0;
+    border: dotted dimgray;
+    border-width: 0 0 1px 0;
+}
+
+#nutrient-list > li {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 1.1rem;
+    margin-bottom: 3px;
+}
+
+#nutrient-list > li > span:first-child {
+    font-weight: 500;
+}
+
+#nutrient-list > li:first-child > span {
+    font-size: 1.5rem;
+    font-weight: bold
 }

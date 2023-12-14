@@ -12,7 +12,7 @@
 <body>
     <main style="display: flex; flex-direction: column; align-items: center;">
         <h1 id="recipe-title">{{recipe.title}}</h1>
-        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; margin: 0px 24px;">
             <div>
                 <span class="recipe-hint-icon">⏲️</span>
                 <span class="recipe-hint">{{recipe.readyInMinutes}} minutes</span>    
@@ -24,7 +24,52 @@
             </div>
         </div>
         <hr class="main-sep">
-        <img id="recipe-image" src="{{recipe.image}}">
+        <img id="recipe-image" src="{{recipe.image}}" alt="{{recipe.title}}">
+        <hr class="main-sep">
+        <div style="max-width: 650px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; margin: 0px 24px; gap: 10px;">
+        {% for cuisine in recipe.cuisines%}
+            <div class="recipe-tag" style="background-color: rgb(255, 250, 222); border-color: rgb(255, 209, 92);">
+                <span>📍 {{cuisine}}</span>
+            </div>
+        {% endfor %}
+        {% for diet in recipe.diets%}
+            <div class="recipe-tag" style="background-color: rgb(226, 255, 231); border-color: rgb(99, 221, 99);">
+                <span>🍴 {{diet}}</span>
+            </div>
+        {% endfor %}
+        {% for dishType in recipe.dishTypes%}
+            <div class="recipe-tag" style="color: dimgray; background-color: rgb(255, 255, 255); border-color: rgb(230, 230, 230);">
+                <span>{{dishType}}</span>
+            </div>
+        {% endfor %}
+        </div>
+        <hr class="main-sep">
+        <div id="tab-container">
+            <div id="tab-strip" style="display: flex;">
+                <a href="#nutrition-info" class="tab-selected">Nutrition</a>
+                <a href="#ingredients">Ingredients</a>
+                <a href="#instructions">Directions</a>
+            </div>
+            <div id="tab-content">
+                <div id="nutrition-info" style="display: block; max-width: 650px; display: flex; flex-direction: column;">
+                    <ul id="nutrient-list">
+                        <li><span>Calories</span><span>{{nutrition.calories.amt}}</span></li>
+                        <li><span>Fat</span><hr class="dot-sep"><span>{{nutrition.fat.amt}} {{nutrition.fat.units}}</span></li>
+                        <li><span>Protein</span><hr class="dot-sep"><span>{{nutrition.protein.amt}} {{nutrition.protein.units}}</span></li>
+                        <li><span>Sodium</span><hr class="dot-sep"><span>{{nutrition.sodium.amt}} {{nutrition.sodium.units}}</span></li>
+                        <li><span>Carbs</span><hr class="dot-sep"><span>{{nutrition.carbohydrates.amt}} {{nutrition.carbohydrates.units}}</span></li>
+                        <li><span>Sugar</span><hr class="dot-sep"><span>{{nutrition.sugar.amt}} {{nutrition.sugar.units}}</span></li>
+                        <li><span>Fiber</span><hr class="dot-sep"><span>{{nutrition.fiber.amt}} {{nutrition.fiber.units}}</span></li>
+                    </ul>
+                </div>
+                <div id="ingredients" style="display: none;">
+                    <p>blah ingredients</p>
+                </div>
+                <div id="instructions" style="display: none;">
+                    <p>instructions instructionsinstructions!!</p>
+                </div>
+            </div>
+        </div>
     </main>
     
 </body>
