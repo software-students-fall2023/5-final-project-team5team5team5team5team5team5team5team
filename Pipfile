@@ -8,6 +8,9 @@ flask = "*"
 pymongo = "*"
 python-dotenv = "*"
 requests = "*"
+pylint = "*"
+chardet = "*"
+flask-login = "*"
 
 [dev-packages]
 pylint = "*"
