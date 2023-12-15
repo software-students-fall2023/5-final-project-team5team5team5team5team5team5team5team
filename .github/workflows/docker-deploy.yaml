@@ -45,6 +45,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: web_app/Dockerfile
           push: true
           tags: js11692/app:latest
   
