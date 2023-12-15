@@ -55,8 +55,22 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
           script: |
             docker pull js11692/app:latest
             docker stop web || true
             docker run --rm -d --name web -p 80:5000 js11692/app:latest
+
+      # - name: Deploy to DigitalOcean Droplet
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
+      #     username: root
+      #     key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+      #     passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
+      #     script: |
+      #       docker pull ***/app:latest
+      #       docker stop web || true
+      #       docker run --rm -d --name web -p 80:5000 ***/app:latest
+
 
