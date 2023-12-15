@@ -57,8 +57,6 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
           script: |
-            docker pull ***/app:latest
+            docker pull js11692/app:latest
             docker stop web || true
-            docker run --rm -d --name web -p 80:5000 ***/app:latest
-
-
+            docker run --rm -d --name web -p 80:5000 js11692/app:latest
