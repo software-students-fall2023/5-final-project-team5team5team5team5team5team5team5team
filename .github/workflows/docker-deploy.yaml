@@ -68,6 +68,7 @@ jobs:
           username: root
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          known_hosts: ${{ secrets.SERVER_HOST_KEY }}
           script: |
             scp -r ./* root@${{ secrets.DIGITALOCEAN_DROPLET_IP }}:/var/www/appThree # Copy all necessary files
             cd /var/www/appThree
