@@ -24,4 +24,4 @@ EXPOSE 5000
 WORKDIR /app/web_app
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
