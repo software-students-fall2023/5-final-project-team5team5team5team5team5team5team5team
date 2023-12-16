@@ -69,8 +69,8 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            mkdir /var/www/appOne
-            cd var/www/appOne
+            mkdir /var/www/appTwo
+            cd var/www/appTwo
             docker-compose pull
             docker-compose down
             docker container prune -f
