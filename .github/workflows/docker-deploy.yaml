@@ -57,7 +57,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            cd var/www/myapp
+            cd var/www/myapp/5-final-project-team5team5team5team5team5team5team5team
             docker-compose pull
             docker-compose down
             docker-compose up -d
