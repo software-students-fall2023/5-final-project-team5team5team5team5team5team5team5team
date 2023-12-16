@@ -55,5 +55,7 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
             docker pull js11692/app:latest
-            docker stop web || true
-            docker run --rm -d --name web -p 80:5000 js11692/app:latest
+            docker-compose pull
+            docker-compose down
+            docker-compose build
+            docker-compose up -d
