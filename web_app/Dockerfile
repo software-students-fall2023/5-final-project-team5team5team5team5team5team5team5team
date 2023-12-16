@@ -24,4 +24,4 @@ EXPOSE 5000
 WORKDIR /app/web_app
 
 # Run app.py when the container launches
-CMD ["python", "/app/web_app/app.py"]
+CMD ["python", "app.py"]
