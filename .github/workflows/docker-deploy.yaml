@@ -54,8 +54,6 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            cd /var/www/myapp/5-final-project-team5team5team5team5team5team5team5team
-            docker-compose pull
-            docker-compose down
-            docker-compose build
-            docker-compose up -d
+            docker pull js11692/app:latest
+            docker stop web || true
+            docker run --rm -d --name web -p 80:5000 js11692/app:latest
