@@ -1,20 +1,17 @@
-version: "3"
+version: "3.8"
 services:
-  # mongodb:
-  #   build: ./mongodb
-  #   container_name: mongodb
-  #   ports:
-  #     - "27017:27017"
-  #   environment:
-  #     - MONGODB_DATABASE=PokemonDB
-  #     - MONGODB_COLLECTION=PokemonCollection
-  #   volumes:
-  #     - mongodb-data:/data/db
-
   web_app:
     build: ./web_app
+    depends_on:
+      - mongodb
     ports:
       - "5000:5000"
 
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 volumes:
-  mongodb-data:
+  mongo-data:
