@@ -49,31 +49,14 @@ jobs:
           push: true
           tags: js11692/app:latest
 
-      - name: Deploy to Digital Ocean
+      - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
           script: |
-            cd web_app/app
-            docker-compose pull
-            docker-compose down
-            docker-compose up -d
-
-
-      # - name: List files in the GitHub Actions workspace
-      #   run: ls -alh $GITHUB_WORKSPACE
-        
-      # - name: Deploy to Digital Ocean
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
-      #     username: root
-      #     key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-      #     script: |
-      #       cd web_app/app
-      #       docker-compose pull
-      #       docker-compose down
-      #       docker-compose up -d
+            docker pull js11692/app:latest
+            docker stop web || true
+            docker run --rm -d --name web -p 80:5000 js11692/app:latest
