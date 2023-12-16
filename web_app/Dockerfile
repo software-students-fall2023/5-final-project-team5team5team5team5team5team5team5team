@@ -1,8 +1,6 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Set the working directory in the container to /app
-WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,4 +22,4 @@ EXPOSE 5000
 WORKDIR /app/web_app
 
 # Run app.py when the container launches
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]
