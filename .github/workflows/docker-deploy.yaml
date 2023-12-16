@@ -61,11 +61,6 @@ jobs:
       - name: List files in the GitHub Actions workspace
         run: ls -alh $GITHUB_WORKSPACE
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-
         
       - name: Deploy to Digital Ocean
         uses: appleboy/ssh-action@master
@@ -73,7 +68,6 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           script: |
-            scp -r ./* root@${{ secrets.DIGITALOCEAN_DROPLET_IP }}:/var/www/appThree
             cd /var/www/appThree
             docker-compose pull
             docker-compose down
