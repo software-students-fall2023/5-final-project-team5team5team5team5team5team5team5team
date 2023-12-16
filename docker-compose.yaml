@@ -1,19 +1,26 @@
-version: "3"
+version: "3.8"
 services:
-  mongodb:
-    build: ./mongodb
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-
   web_app:
     build: ./web_app
     depends_on:
       - mongodb
     ports:
       - "5000:5000"
-
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: web_app/Dockerfile
+  #   ports:
+  #     - "80:5000"
+  #   environment:
+  #     - MONGO_URI=mongodb://mongo:27017/yourdb
+  #   depends_on:
+  #     - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 volumes:
-  mongodb-data:
+  mongo-data:
