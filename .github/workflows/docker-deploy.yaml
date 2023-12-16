@@ -69,7 +69,6 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            mkdir /var/www/appThree
             cd /var/www/appThree
             docker-compose pull
             docker-compose down
