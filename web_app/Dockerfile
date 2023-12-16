@@ -4,24 +4,23 @@ FROM python:3.11-slim
 # Set the working directory in the container to /app
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+RUN echo 'Acquire::http::Timeout "300";' > /etc/apt/apt.conf.d/99timeout
 
-# Copy the requirements file into the container at /app/web_app
-COPY ./web_app/requirements.txt /app/web_app/
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install --fix-missing -y gcc portaudio19-dev ffmpeg
+
+# Copy the requirements file into the container at /app
+COPY requirements.txt /app/
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r /app/web_app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application's code into the container at /app/web_app
-COPY ./web_app /app/web_app
+# Copy the rest of the application's code into the container at /app
+COPY . /app
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Change the work directory to /app/web_app where app.py is located
-WORKDIR /app/web_app
-
-# Run app.py when the container launches
-CMD ["python", "/app/web_app/app.py"]
+# Define the command to run your app using gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
