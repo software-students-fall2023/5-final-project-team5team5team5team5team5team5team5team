@@ -55,8 +55,10 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            docker pull js11692/app:latest
-            docker stop web || true
-            docker run --rm -d --name web -p 80:5000 js11692/app:latest
+            cd /var/www/myapp
+            git pull origin main
+            docker-compose pull
+            docker-compose up -d
+
