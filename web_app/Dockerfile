@@ -9,7 +9,7 @@ COPY ./web_app/requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./web_app .
+COPY ./web_app/app.py /app
 
 EXPOSE 5000
 
