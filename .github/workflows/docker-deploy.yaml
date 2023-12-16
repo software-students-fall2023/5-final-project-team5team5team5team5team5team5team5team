@@ -60,4 +60,5 @@ jobs:
             cd /var/www/myapp/5-final-project-team5team5team5team5team5team5team5team
             docker-compose pull
             docker-compose down
+            docker-compose build
             docker-compose up -d
