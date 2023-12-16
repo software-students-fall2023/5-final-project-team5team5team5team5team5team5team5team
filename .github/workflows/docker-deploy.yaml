@@ -68,9 +68,9 @@ jobs:
           username: root
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          known_hosts: ${{ secrets.SERVER_HOST_KEY }}
           script: |
-            scp -r ./* root@${{ secrets.DIGITALOCEAN_DROPLET_IP }}:/var/www/appThree # Copy all necessary files
+            ssh-keyscan -H ${{ secrets.DIGITALOCEAN_DROPLET_IP }} >> ~/.ssh/known_hosts
+            scp -o StrictHostKeyChecking=no -r ./* root@${{ secrets.DIGITALOCEAN_DROPLET_IP }}:/var/www/appThree
             cd /var/www/appThree
             docker-compose pull
             docker-compose down
@@ -78,3 +78,4 @@ jobs:
             docker image prune -f
             docker volume prune -f
             docker-compose up -d
+
