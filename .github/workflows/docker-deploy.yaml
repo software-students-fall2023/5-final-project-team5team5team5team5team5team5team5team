@@ -59,3 +59,12 @@ jobs:
             docker-compose down
             docker-compose build
             docker-compose up -d
+
+
+      # - name: Build and Push Docker Image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     file: web_app/Dockerfile
+      #     push: true
+      #     tags: js11692/app:latest
