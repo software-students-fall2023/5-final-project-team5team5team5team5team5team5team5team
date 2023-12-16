@@ -60,7 +60,6 @@ jobs:
 
       - name: List files in the GitHub Actions workspace
         run: ls -alh $GITHUB_WORKSPACE
-
         
       - name: Deploy to Digital Ocean
         uses: appleboy/ssh-action@master
@@ -75,5 +74,4 @@ jobs:
             docker image prune -f
             docker volume prune -f
             docker-compose up -d
-
 
