@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   web_app:
-    build: ./web_app
+    build: .
     depends_on:
       - mongodb
     ports:
