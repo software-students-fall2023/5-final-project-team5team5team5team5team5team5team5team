@@ -20,4 +20,4 @@ COPY . /app
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+CMD ["python", "web_app/app.py"]
