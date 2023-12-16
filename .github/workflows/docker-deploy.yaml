@@ -69,6 +69,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
+            scp -r ./* root@${{ secrets.DIGITALOCEAN_DROPLET_IP }}:/var/www/appThree # Copy all necessary files
             cd /var/www/appThree
             docker-compose pull
             docker-compose down
