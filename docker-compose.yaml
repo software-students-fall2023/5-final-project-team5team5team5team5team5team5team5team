@@ -7,7 +7,7 @@ services:
       - "27012:27012"
     environment:
       - DATABASE=Accounts
-      - COLLECTION =accounts
+      - COLLECTION=accounts
     volumes:
       - mongodb-data:/data/db
 
