@@ -37,10 +37,10 @@ jobs:
           docker build -f web_app/Dockerfile -t js11692/web_app:latest ./web_app
           docker push js11692/web_app:latest
 
-      # - name: Build and Push MongoDB Docker Image
-      #   run: |
-      #     docker build -f mongodb/Dockerfile -t js11692/mongodb:latest ./mongodb
-      #     docker push js11692/mongodb:latest
+      - name: Build and Push MongoDB Docker Image
+        run: |
+          docker build -f mongodb/Dockerfile -t js11692/mongodb:latest ./mongodb
+          docker push js11692/mongodb:latest
 
       - name: List files in the GitHub Actions workspace
         run: ls -alh $GITHUB_WORKSPACE
