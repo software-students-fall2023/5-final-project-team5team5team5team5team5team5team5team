@@ -7,7 +7,7 @@ services:
       - "27012:27012"
     environment:
       - DATABASE=Accounts
-      - COLLECTION=accounts # Removed the space before 'accounts'
+      - COLLECTION=accounts
     volumes:
       - mongodb-data:/data/db
 
@@ -20,7 +20,7 @@ services:
     environment:
       - URI=mongodb+srv://js11692:emergencyBlimp@cluster0.agkibmg.mongodb.net/?retryWrites=true&w=majority
       - DATABASE=Accounts
-      - COLLECTION=accounts # Removed the space before 'accounts'
+      - COLLECTION=accounts
 
 volumes:
   mongodb-data:
