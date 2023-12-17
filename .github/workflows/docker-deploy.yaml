@@ -71,7 +71,7 @@ jobs:
           script: |
             cd /var/www/appThree/5-final-project-team5team5team5team5team5team5team5team
             docker-compose pull
-            docker-compose down
+            docker-compose down --remove-orphans
             docker container prune -f
             docker image prune -f
             docker volume prune -f
