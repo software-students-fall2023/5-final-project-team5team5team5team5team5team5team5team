@@ -69,7 +69,7 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            cd /var/www/appThree
+            cd /var/www/appThree/5-final-project-team5team5team5team5team5team5team5team
             docker-compose pull
             docker-compose down
             docker container prune -f
