@@ -36,6 +36,6 @@ jobs:
         run: |
           find . -name "*.pyc" -exec rm -f {} \;
           pip install pytest-cov
-          pytest --cov-config=.coveragerc --cov=./machine_learning_client/tests --cov-report=xml
+          pytest --cov-config=.coveragerc --cov=./web_app/tests --cov-report=xml
           python -m coverage run -m pytest
           python -m coverage report
