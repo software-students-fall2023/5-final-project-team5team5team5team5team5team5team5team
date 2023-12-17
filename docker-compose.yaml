@@ -1,26 +1,13 @@
 version: "3"
 services:
-  mongodb:
-    build: ./mongodb
-    container_name: mongodb
-    ports:
-      - "27012:27012"
-    environment:
-      - DATABASE=Accounts
-      - COLLECTION=accounts
-    volumes:
-      - mongodb-data:/data/db
-
   web_app:
     build: ./web_app
-    depends_on:
-      - mongodb
     ports:
       - "5000:5000"
     environment:
-      - URI=mongodb://mongodb:27017/
-      - DATABASE=Accounts
-      - COLLECTION=accounts
+      - URI=mongodb+srv://js11692:emergencyBlimp@cluster0.agkibmg.mongodb.net/?retryWrites=true&w=majority
+      - DATABASE=accounts
+      - COLLECTION=users
 
 volumes:
   mongodb-data:
