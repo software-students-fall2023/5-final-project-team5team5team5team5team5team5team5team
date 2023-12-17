@@ -10,10 +10,6 @@ services:
   #     - COLLECTION=accounts
   #   volumes:
   #     - mongodb-data:/data/db
-  mongodb:
-    image: "mongo:latest"
-    ports:
-      - "27017:27017"
 
   web_app:
     build: ./web_app
