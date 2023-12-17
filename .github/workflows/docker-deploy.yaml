@@ -27,22 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           # python -m pip install flake8 pytest pytest-cov
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      # - name: Lint with flake8
-      #   run: |
-      #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
-      # - name: Run Tests with Coverage
-      #   run: pytest --cov-config=.coveragerc --cov=./web_app/tests --cov-report=xml --cov-report=term-missing
-
-      # - name: Run tests with pytest
-      #   env:
-      #     PYTHONPATH: ${{ github.workspace }}/web_app/tests
-      #   run: |
-      #     pytest web_app/tests
-      #     python -m coverage run -m pytest web_app/tests
-      #     python -m coverage report
       
       - name: Login to Docker Hub
         run: |
@@ -52,11 +36,6 @@ jobs:
         run: |
           docker build -f web_app/Dockerfile -t js11692/web_app:latest ./web_app
           docker push js11692/web_app:latest
-
-      # - name: Build and Push MongoDB Docker Image
-      #   run: |
-      #     docker build -f mongodb/Dockerfile -t js11692/mongodb:latest ./mongodb
-      #     docker push js11692/mongodb:latest
 
       - name: List files in the GitHub Actions workspace
         run: ls -alh $GITHUB_WORKSPACE
