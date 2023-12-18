@@ -194,3 +194,7 @@ hr.dot-sep {
 #instruction-list > li:last-child {
     margin-bottom: 0;
 }
+
+#navbar{
+    background-color:white;
+}

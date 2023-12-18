@@ -5,7 +5,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - URI=${{ secrets.MONGO_URI }}
+      - URI=${MONGO_URI}
       - DATABASE=accounts
       - COLLECTION=users
 
