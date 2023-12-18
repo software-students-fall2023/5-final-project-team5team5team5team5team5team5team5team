@@ -1,6 +1,8 @@
 """
 flask app for team 5's final project
 """
+# pylint: disable=too-many-arguments
+# pylint: disable=protected-access
 
 from os import getenv
 from sys import exit as sysexit
@@ -99,7 +101,15 @@ login_manager.login_view = "login"
 class User(UserMixin):
     """The class User is a subclass of UserMixin."""
 
-    def __init__(self, username, password, active=True, _id=None):
+    def __init__(
+        self,
+        username,
+        password,
+        disliked_ingredients=None,
+        saved_recipes=None,
+        active=True,
+        _id=None,
+    ):
         """
         The function is a constructor that initializes the attributes of a user object.
 
@@ -115,6 +125,8 @@ class User(UserMixin):
         self.password = password
         self.active = active
         self._id = _id
+        self.disliked_ingredients = disliked_ingredients
+        self.saved_recipes = saved_recipes
 
     def get_id(self):
         """
@@ -125,23 +137,32 @@ class User(UserMixin):
 
     @property
     def is_active(self):
+        """
+        The function returns the value of the "active" attribute.
+        :return: The method is returning the value of the attribute "active".
+        """
         return self.active
 
 
 @login_manager.user_loader
 def load_user(username):
     """
-    The function `load_user` loads a user from a database based on their username and returns a
-    `User`object.
+    The function `load_user` retrieves user information from a database and returns a `User` object.
 
-    :param username: The `username` parameter is a string that represents the username of the
-    user we want to load from the database
-    :return: an instance of the User class with the specified username, password, and _id.
+    :param username: The username parameter is the username of the user we want to load from the
+    database
+    :return: an instance of the User class with the specified attributes.
     """
     u = users.find_one({"username": username})
     if not u:
         return None
-    return User(username=u["username"], password=u["password"], _id=u["_id"])
+    return User(
+        username=u["username"],
+        password=u["password"],
+        disliked_ingredients=u.get("disliked_ingredients"),
+        saved_recipes=u.get("saved_recipes"),
+        _id=u["_id"],
+    )
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -203,12 +224,131 @@ def logout():
 
 
 @app.route("/main")
-@login_required  # Require the user to be logged in to view the main page
+@login_required
 def main():
-    """Renders the main page"""
-    print("Current session:", session)
-    return render_template("main.html", username=current_user.username)
+    """
+    The main function retrieves the value of the "recipes" key from the session dictionary and
+    sets it to an empty list if the key is not present, then renders the "main.html" template
+    with the current user's username and the recipes.
+    :return: the rendered template "main.html" with the variables "username" set to the
+    current user's username and "recipes" set to the value of the "recipes" key from the session
+    dictionary. If the "recipes" key is not present in the session dictionary, it will
+    be set to an empty list.
+    """
+    # retrieves the value of the "recipes" key from the session dictionary.
+    # If the key is not present in session, it sets the value to an empty list.
+    recipes = session.get("recipes", [])
+    session.pop("recipes", None)
+
+    return render_template("main.html", username=current_user.username, recipes=recipes)
+
+
+@app.route("/set_preferences", methods=["POST"])
+@login_required
+def set_preferences():
+    """
+    The `set_preferences` function takes user input for disliked ingredients, combines it with the
+    user's current disliked ingredients, removes duplicates, and updates the user's preferences
+    in the database.
+    :return: a redirect to the "main" route.
+    """
+    new_disliked_ingredients = request.form.get("disliked_ingredients", "").strip()
+    new_disliked_ingredients_list = [
+        ingredient.strip() for ingredient in new_disliked_ingredients.split(",")
+    ]
+    print("new_disliked_ingredients_list", new_disliked_ingredients_list)
+
+    # Fetch current user's disliked ingredients from db
+    user_preferences = users.find_one({"_id": current_user._id})
+    current_disliked_ingredients = user_preferences.get("disliked_ingredients", "")
+    print("current_disliked_ingredients", current_disliked_ingredients)
+
+    # convert the existing string to a list, remove empty strings if any
+    current_disliked_ingredients_list = [
+        ingredient
+        for ingredient in current_disliked_ingredients.split(",")
+        if ingredient
+    ]
+
+    # combine the lists, remove duplicates, and convert back to a string
+    updated_disliked_ingredients_list = list(
+        set(current_disliked_ingredients_list + new_disliked_ingredients_list)
+    )
+    updated_disliked_ingredients = ",".join(updated_disliked_ingredients_list)
+
+    print("updated_disliked_ingredients", updated_disliked_ingredients)
+
+    users.update_one(
+        {"_id": current_user._id},
+        {"$set": {"disliked_ingredients": updated_disliked_ingredients}},
+    )
+    # print("current_user.disliked_ingredients:", current_user.disliked_ingredients)
+
+    return redirect(url_for("main"))
+
+
+@app.route("/show_recipes", methods=["POST"])
+@login_required
+def show_recipes():
+    """
+    The function fetches recipes from the Spoonacular API, excluding any ingredients
+    that the current user has disliked, and stores the recipes in the session.
+    :return: a redirect to the "main" route.
+    """
+    # Fetch current user's disliked ingredients from db
+    user_preferences = users.find_one({"_id": current_user._id})
+    disliked_ingredients = user_preferences.get("disliked_ingredients", "")
+
+    recipes = fetch_spoon_api(
+        "https://api.spoonacular.com/recipes/complexSearch",
+        {"excludeIngredients": disliked_ingredients, "number": "5"},
+    ).get("results", [])
+
+    # Store recipes in session
+    session["recipes"] = recipes
+
+    return redirect(url_for("main"))
+
+
+@app.route("/save_recipe", methods=["POST"])
+@login_required
+def save_recipe():
+    """
+    The `save_recipe` function saves a recipe by adding its ID to the `saved_recipes` array of the
+    current user.
+    :return: a dictionary with two key-value pairs. The "status" key has the value "success" and the
+    "message" key has the value "Recipe saved".
+    """
+    data = request.get_json()
+    recipe_id = data.get("recipe_id")
+    users.update_one(
+        {"_id": current_user._id}, {"$addToSet": {"saved_recipes": recipe_id}}
+    )
+    return {"status": "success", "message": "Recipe saved"}
+
+
+# @app.route("/search_results")
+# @login_required
+# def search_results():
+#     """Renders search results page"""
+#     disliked_ingredients = current_user.disliked_ingredients
+#     recipes = fetch_spoon_api(
+#         "https://api.spoonacular.com/recipes/complexSearch",
+#         {"excludeIngredients": disliked_ingredients, "number": "5"},
+#     )
+
+#     return render_template("search_results.html", recipes=recipes["results"])
+
+
+# @app.route("/remove_preference/<ingredient>", methods=["POST"])
+# @login_required
+# def remove_preference(ingredient):
+#     users.update_one(
+#         {"_id": current_user._id},
+#         {"$pull": {"disliked_ingredients": ingredient}},
+#     )
+#     return redirect(url_for("main"))
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, use_reloader=True)
+    app.run(host="0.0.0.0", port=5000, use_reloader=True, debug=True)

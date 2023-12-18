@@ -1,11 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main Page</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Main Page</h1>
-    <h2>Username: {{ username }}</h2>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Main Page</h1>
+      <div class="text-center mb-3">
+        <h2>Welcome, {{ username }}!</h2>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <form
+            action="{{ url_for('set_preferences') }}"
+            method="post"
+            class="mb-3"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                name="disliked_ingredients"
+                class="form-control"
+                placeholder="Ingredients I don't want"
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">
+                  Submit Preferences
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <form
+            action="{{ url_for('show_recipes') }}"
+            method="post"
+            class="mb-3"
+          >
+            <button type="submit" class="btn btn-success">Show Recipes</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-lg-4 d-flex align-items-stretch">
+          <div class="card mb-4">
+            <img
+              src="{{ recipe.image }}"
+              class="card-img-top"
+              alt="{{ recipe.title }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }}</h5>
+              <button
+                onclick="saveRecipe('{{ recipe.id }}')"
+                class="btn btn-info"
+              >
+                Save Recipe
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      function saveRecipe(recipeId) {
+        fetch("{{ url_for('save_recipe') }}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ recipe_id: recipeId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.status === "success") {
+              alert("Recipe saved!");
+            }
+          });
+      }
+    </script>
   </body>
 </html>
