@@ -61,6 +61,17 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: ls -alh /root/var/www/appTwo/
+      
+      - name: Clean up Docker environment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          script: |
+            docker-compose -f /root/var/www/appTwo/docker-compose.yaml down --remove-orphans
+            docker system prune -af --volumes
+
 
 
       - name: Deploy to Digital Ocean
