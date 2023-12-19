@@ -343,6 +343,19 @@ def save_recipe():
     )
     return {"status": "success", "message": "Recipe saved"}
 
+@app.route("/show_saved_recipes")
+@login_required
+def show_saved_recipes():
+    """
+    The function clears the session's recipes and redirects to the "main" route
+    to display the user's saved recipes.
+    """
+    # Clear the session's recipes
+    session.pop("recipes", None)
+
+    # Redirect to the "main" route
+    return redirect(url_for("main"))
+
 
 # @app.route("/search_results")
 # @login_required
