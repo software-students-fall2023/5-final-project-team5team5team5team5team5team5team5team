@@ -187,3 +187,27 @@ def test_logout_route(test_client):
     # Check the session after the logout request
     with test_client.session_transaction() as sess:
         assert "user_id" not in sess
+
+def test_saved_recipes(test_client):
+    """
+    The function tests the saved recipes route by simulating a login, making
+    a GET request to the saved recipes route,
+    and then checking the session to ensure that the user ID is present.
+
+    :param test_client: The `test_client` parameter is an instance of
+    Flask's `TestClient` class. It is
+    used to simulate requests to your Flask application during testing.
+    You can use it to send HTTP
+    requests and receive responses, just like you would with a regular client
+    """
+    # Simulate login if necessary
+    with test_client.session_transaction() as sess:
+        sess["_user_id"] = "some_user_id"
+        sess[
+            "_fresh"
+        ] = True  # Flask-Login checks for '_fresh' in session during logout
+    response = test_client.get("/saved_recipes")
+    assert response.status_code == 200
+    # Check the session after the logout request
+    with test_client.session_transaction() as sess:
+        assert "user_id" in sess
