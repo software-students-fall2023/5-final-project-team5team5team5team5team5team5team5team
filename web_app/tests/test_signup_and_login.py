@@ -7,11 +7,11 @@ class FlaskAppTest(unittest.TestCase):
     def setUp(self):
         # set up a test client and db
         self.app = app.test_client()
-        self.db = app.test_db
+        self.db = app.config['accounts']
 
     def tearDown(self):
         #reset
-        self.db.drop_collection("users")
+        self.db.users.drop()
 
     def test_signup(self):
         # test user registration
@@ -26,7 +26,7 @@ class FlaskAppTest(unittest.TestCase):
         self.assertIn(b'Registration successful.', response.data)
 
         # check if the user is now in the db
-        user_in_db = users.find_one({"username": "testuser"})
+        user_in_db = self.db.users.find_one({"username": "testuser"})
         self.assertIsNotNone(user_in_db)
 
     def test_login(self):
@@ -34,7 +34,7 @@ class FlaskAppTest(unittest.TestCase):
 
         # create a test user in the db
         hashed_password = generate_password_hash('testpassword')
-        users.insert_one({"username": "testuser", "password": hashed_password})
+        self.db.users.insert_one({"username": "testuser", "password": hashed_password})
 
         # make a POST request to the login route with test data
         response = self.app.post('/login', data=dict(
