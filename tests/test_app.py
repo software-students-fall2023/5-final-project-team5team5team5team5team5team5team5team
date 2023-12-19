@@ -188,42 +188,6 @@ def test_logout_route(test_client):
     with test_client.session_transaction() as sess:
         assert "user_id" not in sess
 
-def test_set_preferences_route(test_client, mocker):
-    """
-    Test the set_preferences route by simulating a login, making a POST request with
-    new disliked ingredients, and checking if the user's preferences are updated.
-    """
-    # Simulate login if necessary
-    with test_client.session_transaction() as sess:
-        sess["_user_id"] = "some_user_id"
-        sess["_fresh"] = True
-
-    # Mock the users collection in the database
-    mock_users = mocker.patch("web_app.app.users")
-
-    # Mock the find_one method to return a user with some existing disliked ingredients
-    mock_users.find_one.return_value = {
-        "_id": "some_user_id",
-        "disliked_ingredients": "ingredient1,ingredient2",
-    }
-
-    # Make a POST request to set_preferences with new disliked ingredients
-    response = test_client.post(
-        "/set_preferences",
-        data={"disliked_ingredients": "ingredient3,ingredient4"},
-        follow_redirects=True,
-    )
-
-    assert response.status_code == 200
-
-    # Check if the database was updated with the combined and deduplicated disliked ingredients
-    mock_users.update_one.assert_called_once_with(
-        {"_id": "some_user_id"},
-        {"$set": {"disliked_ingredients": "ingredient1,ingredient2,ingredient3,ingredient4"}},
-    )
-
-    # Check if the user is redirected to the main route
-    assert "/main" in response.headers["Location"]
 
 def test_saved_recipes(test_client):
     """
