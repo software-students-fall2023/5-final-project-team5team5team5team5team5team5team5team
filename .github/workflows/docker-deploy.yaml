@@ -51,9 +51,11 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          source: "./**/*"
+          source: ".,*"
           target: "/root/var/www/appTwo/"
+          overwrite: true 
           recursive: "true" 
+          extra_args: "-v"
 
       - name: List files in the target directory
         uses: appleboy/ssh-action@master
