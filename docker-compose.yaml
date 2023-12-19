@@ -4,8 +4,23 @@ services:
     build: ./web_app
     ports:
       - "5000:5000"
+    depends_on:
+      - mongo
     environment:
-      - URI=${MONGO_URI}
+      - URI=mongodb://mongo:27017/
+      - DATABASE=accounts
+      - COLLECTION=users
+
+  mongo:
+    build:
+      context: ./mongodb
+      dockerfile: Dockerfile.mongo
+    container_name: mongodb
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
       - DATABASE=accounts
       - COLLECTION=users
 
