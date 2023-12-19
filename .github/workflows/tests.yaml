@@ -44,7 +44,7 @@ jobs:
         env:
             PYTHONPATH: ${{ github.workspace }}/tests
         run: |
-          pipenv pytest --cov=./ tests/ --cov-report=xml
+          pipenv run pytest --cov=./ tests/ --cov-report=xml
           pipenv run python -m coverage run -m pytest
           pipenv run python -m coverage report
 
