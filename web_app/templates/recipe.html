@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{recipe.title}} - Team5</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="preload"
+      href="{{ url_for('static', filename='css/recipe.css') }}"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/recipe.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/recipe.js') }}"
+      async
+    ></script>
+  </head>
+
+  <body>
+    <main
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+      "
+    >
+      <h1 id="recipe-title">{{recipe.title}}</h1>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin: 0px 24px;
+        "
+      >
+        <div>
+          <span class="recipe-hint-icon">⏲️</span>
+          <span class="recipe-hint">{{recipe.readyInMinutes}} minutes</span>
+        </div>
+        <span class="recipe-hint-sep">‧</span>
+        <div>
+          <span class="recipe-hint-icon">🍽️</span>
+          <span class="recipe-hint">{{recipe.servings}} servings</span>
+        </div>
+      </div>
+      <hr class="main-sep" />
+      <img id="recipe-image" src="{{recipe.image}}" alt="{{recipe.title}}" />
+      <hr class="main-sep" />
+      <div
+        style="
+          max-width: 650px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin: 0px 24px;
+          gap: 10px;
+        "
+      >
+        {% for cuisine in recipe.cuisines%}
+        <div
+          class="recipe-tag"
+          style="
+            background-color: rgb(255, 250, 222);
+            border-color: rgb(255, 209, 92);
+          "
+        >
+          <span>📍 {{cuisine}}</span>
+        </div>
+        {% endfor %} {% for diet in recipe.diets%}
+        <div
+          class="recipe-tag"
+          style="
+            background-color: rgb(226, 255, 231);
+            border-color: rgb(99, 221, 99);
+          "
+        >
+          <span>🍴 {{diet}}</span>
+        </div>
+        {% endfor %} {% for dishType in recipe.dishTypes%}
+        <div
+          class="recipe-tag"
+          style="
+            color: dimgray;
+            background-color: rgb(255, 255, 255);
+            border-color: rgb(220, 220, 220);
+          "
+        >
+          <span>{{dishType}}</span>
+        </div>
+        {% endfor %}
+      </div>
+      <hr class="main-sep" />
+      <div id="tab-container">
+        <div id="tab-strip" style="display: flex">
+          <a class="tab tab-selected" tab-target="#nutrition-info">Nutrition</a>
+          <a class="tab" tab-target="#ingredients">Ingredients</a>
+          <a class="tab" tab-target="#instructions">Directions</a>
+        </div>
+        <div id="tab-content">
+          <div id="nutrition-info" style="display: block">
+            <p style="margin: 0 0 5px 0; color: dimgray">
+              <i>(per serving)</i>
+            </p>
+            <ul
+              id="nutrient-list"
+              style="margin: 0; padding: 0; list-style-type: none"
+            >
+              <li>
+                <span>Calories</span><span>{{nutrition.calories.amt}}</span>
+              </li>
+              <li>
+                <span>Fat</span>
+                <hr class="dot-sep" />
+                <span>{{nutrition.fat.amt}} {{nutrition.fat.units}}</span>
+              </li>
+              <li>
+                <span>Protein</span>
+                <hr class="dot-sep" />
+                <span
+                  >{{nutrition.protein.amt}} {{nutrition.protein.units}}</span
+                >
+              </li>
+              <li>
+                <span>Sodium</span>
+                <hr class="dot-sep" />
+                <span>{{nutrition.sodium.amt}} {{nutrition.sodium.units}}</span>
+              </li>
+              <li>
+                <span>Carbs</span>
+                <hr class="dot-sep" />
+                <span
+                  >{{nutrition.carbohydrates.amt}}
+                  {{nutrition.carbohydrates.units}}</span
+                >
+              </li>
+              <li>
+                <span>Sugar</span>
+                <hr class="dot-sep" />
+                <span>{{nutrition.sugar.amt}} {{nutrition.sugar.units}}</span>
+              </li>
+              <li>
+                <span>Fiber</span>
+                <hr class="dot-sep" />
+                <span>{{nutrition.fiber.amt}} {{nutrition.fiber.units}}</span>
+              </li>
+            </ul>
+          </div>
+          <div id="ingredients" style="display: none">
+            <ul
+              id="ingredient-list"
+              style="margin: 5px 0 0 0; padding: 0; list-style-type: none"
+            >
+              {% for ingredient in recipe.extendedIngredients %}
+              <li>
+                <input
+                  type="checkbox"
+                  id="{{ingredient.id}}"
+                  class="ingredient-check"
+                />
+                <label for="{{ingredient.id}}" class="ingredient-label"
+                  >{{ingredient.original}}</label
+                >
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div id="instructions" style="display: none">
+            <ol
+              id="instruction-list"
+              style="margin: 5px 0 0 0; padding: 0; list-style-type: none"
+            >
+              {% for step in recipe.analyzedInstructions[0].steps %}
+              <li>
+                <span
+                  style="
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    margin-right: 8px;
+                  "
+                  >{{step.number}}</span
+                >
+                <span>{{step.step}}</span>
+              </li>
+              {% endfor %}
+              <li
+                style="
+                  padding: 15px 7px 0 0;
+                  color: dimgray;
+                  font-style: italic;
+                  font-size: 1rem;
+                  width: auto;
+                  text-align: right;
+                "
+              >
+                <span
+                  >Recipe courtesy of
+                  <a href="{{recipe.sourceUrl}}" style="color: inherit"
+                    >{{recipe.creditsText}}</a
+                  ></span
+                >
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
