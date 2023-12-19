@@ -51,8 +51,8 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          source: "./*" # or "./**"
-          target: "/root/var/www/appTwo"
+          source: "./**"
+          target: "/var/www/appTwo"
         
 
       - name: Deploy to Digital Ocean
