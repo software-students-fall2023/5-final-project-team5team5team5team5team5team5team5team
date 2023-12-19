@@ -11,7 +11,7 @@ services:
     environment:
       - FLASK_SECRET_KEY=emergencyBlimp
       - SPOON_SECRET=8c6bd3a0f40744e3967ff515544ef999
-      - URI=mongodb://mongo:27017/
+      - URI=mongodb://mongo:27017
       - DATABASE=accounts
       - COLLECTION=users
 
