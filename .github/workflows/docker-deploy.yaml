@@ -52,7 +52,7 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           source: "./*" # or "./**"
-          target: "/var/www/appTwo"
+          target: "/root/var/www/appTwo"
         
 
       - name: Deploy to Digital Ocean
