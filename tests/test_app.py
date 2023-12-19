@@ -204,16 +204,18 @@ def test_saved_recipes(test_client):
     # Simulate login if necessary
     with test_client.session_transaction() as sess:
         sess["_user_id"] = "some_user_id"
-        sess["_fresh"] = True  # Flask-Login checks for '_fresh' in session during logout
-    
+        sess[
+            "_fresh"
+        ] = True  # Flask-Login checks for '_fresh' in session during logout
+
     # Make a GET request to the saved recipes route
     response = test_client.get("/show_saved_recipes")
 
     # Check if the response is a redirection (status code 302)
     assert response.status_code == 302
-    
+
     # Check if the redirection is to the login page
     assert "/login" in response.headers["Location"]
-    
+
     # Check if the intended destination is "/show_saved_recipes"
     assert "next=%2Fshow_saved_recipes" in response.headers["Location"]
