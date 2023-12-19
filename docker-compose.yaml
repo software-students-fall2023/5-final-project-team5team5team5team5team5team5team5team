@@ -12,9 +12,7 @@ services:
       - COLLECTION=users
 
   mongo:
-    build:
-      context: ./mongodb
-      dockerfile: Dockerfile.mongo
+    build: ./mongodb
     container_name: mongodb
     volumes:
       - mongodb-data:/data/db
