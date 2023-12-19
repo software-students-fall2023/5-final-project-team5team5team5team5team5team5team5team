@@ -32,8 +32,7 @@ jobs:
           pipenv lock
           pipenv sync --dev --python $(which python)
           pipenv shell --fancy --python $(which python)
-          pipenv install python-dotenv
-          pipenv install pytest-cov
+          pipenv install pytest python-dotenv pytest-cov
 
       - name: 'Create fake env file'
         run: |
@@ -45,7 +44,7 @@ jobs:
         env:
             PYTHONPATH: ${{ github.workspace }}/tests
         run: |
-          pytest --cov=./ tests/ --cov-report=xml
+          pipenv pytest --cov=./ tests/ --cov-report=xml
           pipenv run python -m coverage run -m pytest
           pipenv run python -m coverage report
 
