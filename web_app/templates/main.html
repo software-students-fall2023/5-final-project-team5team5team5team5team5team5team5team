@@ -24,7 +24,7 @@
             action="{{ url_for('set_preferences') }}"
             method="post"
             class="mb-3"
-          >
+                      >
             <div class="input-group">
               <input
                 type="text"
@@ -54,7 +54,9 @@
       <div class="row">
         {% for recipe in recipes %}
         <div class="col-lg-4 d-flex align-items-stretch">
-          <div class="card mb-4">
+          <div class="card mb-4"
+            onclick="openRecipeUrl('{{ recipe.url }}')"
+          >
             <img
               src="{{ recipe.image }}"
               class="card-img-top"
@@ -81,6 +83,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+      function openRecipeUrl(url){
+        window.open(url, "_blank");
+      }
       function saveRecipe(recipeId) {
         fetch("{{ url_for('save_recipe') }}", {
           method: "POST",

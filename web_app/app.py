@@ -304,6 +304,11 @@ def show_recipes():
         {"excludeIngredients": disliked_ingredients, "number": "5"},
     ).get("results", [])
 
+    for recipe in recipes:
+        recipe["url"] = fetch_spoon_api(
+            f"https://api.spoonacular.com/recipes/{recipe['id']}/information"
+        ).get("sourceUrl", "")
+
     # Store recipes in session
     session["recipes"] = recipes
 
