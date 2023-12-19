@@ -81,7 +81,8 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
-            export MONGO_URI="${{ secrets.MONGO_URI }}"
+            # export MONGO_URI="${{ secrets.MONGO_URI }}"
+            export SPOON_SECRET="${{ secrets.SPOON_SECRET }}"
             cd /root/var/www/appTwo/
             docker-compose pull
             docker-compose down --remove-orphans
