@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find your new favorites</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div id="search-results">
+        <div class="row">
+            {% for recipe in recipes %}
+            <div class="col-lg-4 d-flex align-items-stretch">
+              <div class="card mb-4">
+                <img
+                  src="{{ recipe.image }}"
+                  class="card-img-top"
+                  alt="{{ recipe.title }}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ recipe.title }}</h5>
+                  <button
+                    onclick="saveRecipe('{{ recipe.id }}')"
+                    class="btn btn-info"
+                  >
+                    Save Recipe
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+    </div>
+</body>
+</html>
