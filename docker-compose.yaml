@@ -1,7 +1,9 @@
 version: "3"
 services:
   web_app:
-    build: ./web_app
+    build:
+      context: ./web_app
+      dockerfile: ./web_app/Dockerfile
     ports:
       - "5000:5000"
     depends_on:
