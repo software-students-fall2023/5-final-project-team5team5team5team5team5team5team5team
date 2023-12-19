@@ -34,7 +34,7 @@ class FlaskAppTest(unittest.TestCase):
 
         # create a test user in the db
         hashed_password = generate_password_hash('testpassword')
-        self.db.users.insert_one({"username": "testuser", "password": hashed_password})
+        self.db.users.insert_one({"username": "testuser", "testpassword": hashed_password})
 
         # make a POST request to the login route with test data
         response = self.app.post('/login', data=dict(
