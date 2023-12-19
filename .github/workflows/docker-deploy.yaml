@@ -53,6 +53,7 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           source: "./**/*"
           target: "/root/var/www/appTwo/"
+          recursive: "true" 
 
       - name: List files in the target directory
         uses: appleboy/ssh-action@master
