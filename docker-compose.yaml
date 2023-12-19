@@ -1,11 +1,28 @@
 version: "3"
 services:
   web_app:
-    build: ./web_app
+    build:
+      context: ./web_app
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    depends_on:
+      - mongo
     environment:
-      - URI=${MONGO_URI}
+      - FLASK_SECRET_KEY=emergencyBlimp
+      - SPOON_SECRET=8c6bd3a0f40744e3967ff515544ef999
+      - URI=mongodb://mongo:27017/
+      - DATABASE=accounts
+      - COLLECTION=users
+
+  mongo:
+    build: ./mongodb
+    container_name: mongodb
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
       - DATABASE=accounts
       - COLLECTION=users
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
