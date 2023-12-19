@@ -7,7 +7,8 @@ flask app for team 5's final project
 from os import getenv
 from sys import exit as sysexit
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_pymongo import PyMongo
+
+# from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import requests
 
@@ -27,7 +28,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 load_dotenv()
 app = Flask(__name__)
 app.config["MONGO_URI"] = getenv("MONGO_URI")
-mongo = PyMongo(app)
+# mongo = PyMongo(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = getenv("FLASK_SECRET_KEY")
 
