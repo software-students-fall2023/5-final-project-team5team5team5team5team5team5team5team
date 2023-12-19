@@ -313,7 +313,7 @@ def search_recipes():
 
     recipes = fetch_spoon_api(
         "https://api.spoonacular.com/recipes/complexSearch",
-        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": searchQuery},
+        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": searchQuery}
     ).get("results", [])
 
     for recipe in recipes:
