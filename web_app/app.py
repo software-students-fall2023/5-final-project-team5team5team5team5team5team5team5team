@@ -242,7 +242,9 @@ def main():
     """
     # Retrieve the value of the "recipes" key from the session dictionary.
     # If the key is not present in the session, set the value to the user's saved recipes.
-    user_recipes_ids = users.find_one({"_id": current_user._id}).get("saved_recipes", [])
+    user_recipes_ids = users.find_one({"_id": current_user._id}).get(
+        "saved_recipes", []
+    )
     recipes = session.get("recipes", [])
 
     if not session.get("recipes"):
@@ -318,7 +320,11 @@ def search_recipes():
 
     recipes = fetch_spoon_api(
         "https://api.spoonacular.com/recipes/complexSearch",
-        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": search_query}
+        {
+            "excludeIngredients": disliked_ingredients,
+            "number": "6",
+            "titleMatch": search_query,
+        },
     ).get("results", [])
 
     for recipe in recipes:
@@ -347,6 +353,7 @@ def save_recipe():
         {"_id": current_user._id}, {"$addToSet": {"saved_recipes": recipe_id}}
     )
     return {"status": "success", "message": "Recipe saved"}
+
 
 @app.route("/show_saved_recipes")
 @login_required

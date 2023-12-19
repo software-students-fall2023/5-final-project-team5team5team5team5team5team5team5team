@@ -188,6 +188,7 @@ def test_logout_route(test_client):
     with test_client.session_transaction() as sess:
         assert "user_id" not in sess
 
+
 def test_saved_recipes(test_client):
     """
     The function tests the saved recipes route by simulating a login, making
@@ -206,7 +207,7 @@ def test_saved_recipes(test_client):
         sess[
             "_fresh"
         ] = True  # Flask-Login checks for '_fresh' in session during logout
-    response = test_client.get("/saved_recipes")
+    response = test_client.get("/show_saved_recipes")
     assert response.status_code == 200
     # Check the session after the logout request
     with test_client.session_transaction() as sess:
