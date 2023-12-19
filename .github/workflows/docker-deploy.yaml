@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.DIGITALOCEAN_DROPLET_IP }}
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          source: "./**/**"
+          source: "./**/*"
           target: "/root/var/www/appTwo/"
 
       - name: List files in the target directory
