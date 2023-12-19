@@ -62,7 +62,7 @@ NUTRIENTS = {"calories", "fat", "sodium", "carbohydrates", "sugar", "protein", "
 
 
 @app.route("/recipe/<recipe_id>")
-def recipe(recipe_id=639413):
+def recipe_details(recipe_id=639413):
     """Renders recipe details page"""
 
     res = fetch_spoon_api(
@@ -309,11 +309,11 @@ def search_recipes():
     # Fetch current user's disliked ingredients from db
     user_preferences = users.find_one({"_id": current_user._id})
     disliked_ingredients = user_preferences.get("disliked_ingredients", "")
-    searchQuery = request.form.get("search_query", "")
+    search_query = request.form.get("search_query", "")
 
     recipes = fetch_spoon_api(
         "https://api.spoonacular.com/recipes/complexSearch",
-        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": searchQuery}
+        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": search_query}
     ).get("results", [])
 
     for recipe in recipes:
