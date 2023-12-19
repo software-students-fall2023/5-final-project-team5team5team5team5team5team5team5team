@@ -7,7 +7,7 @@ class FlaskAppTest(unittest.TestCase):
     def setUp(self):
         # set up a test client and db
         self.app = app.test_client()
-        self.db = app.config['accounts']
+        self.db = app.config['DATABASE']
 
     def tearDown(self):
         #reset
