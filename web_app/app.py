@@ -27,7 +27,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 app = Flask(__name__)
-app.config["MONGO_URI"] = getenv("MONGO_URI")
+# app.config["MONGO_URI"] = getenv("MONGO_URI")
 # mongo = PyMongo(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = getenv("FLASK_SECRET_KEY")
