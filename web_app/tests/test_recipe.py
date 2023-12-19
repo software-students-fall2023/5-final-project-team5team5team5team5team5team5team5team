@@ -33,3 +33,9 @@ class TestRecipe:
         with patch("web_app.app.fetch_spoon_api", return_value=test_rec_m):
             res = client.get("/recipe/1234")
             assert res.status_code == 200
+            
+    def test_recipe_url(self, client):
+        """test recipe url"""
+        with patch("web_app.app.fetch_spoon_api", return_value=TEST_REC):
+            res = client.get("/recipe/1234")
+            assert res.status_code == 200
