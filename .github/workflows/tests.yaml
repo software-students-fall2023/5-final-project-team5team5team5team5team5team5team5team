@@ -32,6 +32,7 @@ jobs:
           pipenv lock
           pipenv sync --dev --python $(which python)
           pipenv shell --fancy --python $(which python)
+          pip install pytest python-dotenv pytest-cov
           pipenv install pytest python-dotenv pytest-cov
 
       - name: 'Create fake env file'
@@ -41,12 +42,9 @@ jobs:
           echo "DATABASE=a" >> .env
 
       - name: Run tests with coverage
-        env:
-            PYTHONPATH: ${{ github.workspace }}/tests
         run: |
-          pipenv run pytest --cov=./ tests/ --cov-report=xml
-          pipenv run python -m coverage run -m pytest
-          pipenv run python -m coverage report
+          pytest --cov=tests --cov-report=xml
+          python -m coverage report
 
       # # Add a step for uploading to Codecov or another service if desired
       # - name: Upload coverage to Codecov
