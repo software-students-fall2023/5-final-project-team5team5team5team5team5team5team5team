@@ -306,7 +306,7 @@ def show_recipes():
 
     recipes = fetch_spoon_api(
         "https://api.spoonacular.com/recipes/complexSearch",
-        {"excludeIngredients": disliked_ingredients, "number": "5"},
+        {"excludeIngredients": disliked_ingredients, "number": "6"},
     ).get("results", [])
 
     # Store recipes in session
