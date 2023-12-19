@@ -4,12 +4,16 @@
 
 ```
 Coverage report
-Name                  Stmts   Miss  Cover
------------------------------------------
-tests/test_app.py .......                                                [ 50%]
-web_app/tests/test_fetch_spoon.py ..                                     [ 64%]
-web_app/tests/test_recipe.py ..                                          [ 78%]
-web_app/tests/test_signup_and_login.py ...                               [100%]
+Name                             Stmts   Miss  Cover
+----------------------------------------------------
+tests/__init__.py                    0      0   100%
+tests/recipe_test_data.py            1      0   100%
+tests/test_app.py                   55      0   100%
+tests/test_fetch_spoon.py           23      0   100%
+tests/test_recipe.py                20      0   100%
+tests/test_signup_and_login.py      28      1    96%
+----------------------------------------------------
+TOTAL                              127      1    99%
 ```
 
 For the web-app, this is the coverage report
@@ -42,23 +46,25 @@ git clone https://github.com/software-students-fall2023/5-final-project-team5tea
 3. Open command prompt (accessible through windows search)
 
 4. Go to the directory where you cloned the repository with:
+
 ```
 cd "path_to_directory"
 ```
 
 5. You should be in the root directory. Now, do:
+
 ```
 docker-compose build
 docker-compose up
 ```
 
-6. Open a web browser and go to: http://localhost:5000/
+6. Open a web browser and go to: <http://localhost:5000/>
 
 You should now see tha app running.
 
 ### Method 2: Access the website
 
-To try the application directly through this url: http://134.209.168.140:5000/
+To try the application directly through this url: <http://134.209.168.140:5000/>
 
 ## Contributors
 
@@ -66,5 +72,3 @@ To try the application directly through this url: http://134.209.168.140:5000/
 - [IvanJing](https://github.com/IvanJing)
 - [FrozenEclipse](https://github.com/FrozenEclipse)
 - [jeffreysaeteros](https://github.com/jeffreysaeteros)
-
-
