@@ -96,7 +96,7 @@ def recipe(recipe_id=639413):
 client = MongoClient(getenv("URI"))  # Replace with your connection string
 db = client[getenv("DATABASE")]  # Replace with your database name
 users = db.users
-app.config['DATABASE'] = db
+app.config["DATABASE"] = db
 
 # Flask-Login setup
 login_manager = LoginManager()
