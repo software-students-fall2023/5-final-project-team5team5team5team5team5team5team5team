@@ -52,7 +52,7 @@ jobs:
           username: root
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           source: "./**/*"
-          target: "/root/var/www/appTwo/"
+          target: "/var/www/appTwo/"
 
       - name: List files in the target directory
         uses: appleboy/ssh-action@master
@@ -71,7 +71,7 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           script: |
             export MONGO_URI="${{ secrets.MONGO_URI }}"
-            cd /root/var/www/appTwo/
+            cd /var/www/appTwo/
             docker-compose pull
             docker-compose down --remove-orphans
             docker container prune -f
