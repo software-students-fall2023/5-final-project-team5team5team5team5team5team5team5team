@@ -9,7 +9,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - SPOON_SECRET=${SPOON_SECRET}
+      - SPOON_SECRET=8c6bd3a0f40744e3967ff515544ef999
       - URI=mongodb://mongo:27017/
       - DATABASE=accounts
       - COLLECTION=users
