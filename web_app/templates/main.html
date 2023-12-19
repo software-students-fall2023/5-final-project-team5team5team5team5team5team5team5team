@@ -135,7 +135,7 @@
         {% for recipe in recipes %}
         <div class="col-lg-4 d-flex align-items-stretch">
           <div class="card mb-4"
-            onclick="openRecipeUrl('{{ recipe.sourceUrl }}')"
+            onclick="openRecipeUrl('/recipe/{{ recipe.id }}')"
           >
             <img
               src="{{ recipe.image }}"
