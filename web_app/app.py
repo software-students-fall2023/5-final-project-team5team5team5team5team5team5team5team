@@ -19,6 +19,7 @@ from flask_login import (
     logout_user,
     current_user,
 )
+
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -90,10 +91,10 @@ def recipe(recipe_id=639413):
     return render_template("recipe.html", recipe=res, nutrition=nutrition)
 
 
-# # MongoDB setup
-# client = MongoClient(getenv("URI"))  # Replace with your connection string
-# db = client[getenv("DATABASE")]  # Replace with your database name
-users = mongo.users
+# MongoDB setup
+client = MongoClient(getenv("URI"))  # Replace with your connection string
+db = client[getenv("DATABASE")]  # Replace with your database name
+users = db.users
 
 # Flask-Login setup
 login_manager = LoginManager()
