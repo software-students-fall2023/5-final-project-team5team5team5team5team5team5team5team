@@ -24,7 +24,7 @@
             action="{{ url_for('set_preferences') }}"
             method="post"
             class="mb-3"
-                      >
+          >
             <div class="input-group">
               <input
                 type="text"
@@ -65,7 +65,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ recipe.title }}</h5>
               <button
-                onclick="saveRecipe('{{ recipe.id }}')"
+                onclick="saveRecipe(event, '{{ recipe.id }}')"
                 class="btn btn-info"
               >
                 Save Recipe
@@ -86,7 +86,8 @@
       function openRecipeUrl(url){
         window.open(url, "_blank");
       }
-      function saveRecipe(recipeId) {
+      function saveRecipe(event, recipeId) {
+        event.stopPropagation();
         fetch("{{ url_for('save_recipe') }}", {
           method: "POST",
           headers: {
