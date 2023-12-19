@@ -233,11 +233,22 @@ def main():
     :return: the rendered template "main.html" with the variables "username" set to the
     current user's username and "recipes" set to the value of the "recipes" key from the session
     dictionary. If the "recipes" key is not present in the session dictionary, it will
-    be set to an empty list.
+    be set to the user's saved recipes.
     """
-    # retrieves the value of the "recipes" key from the session dictionary.
-    # If the key is not present in session, it sets the value to an empty list.
+    # Retrieve the value of the "recipes" key from the session dictionary.
+    # If the key is not present in the session, set the value to the user's saved recipes.
+    user_recipes_ids = users.find_one({"_id": current_user._id}).get("saved_recipes", [])
     recipes = session.get("recipes", [])
+
+    if not session.get("recipes"):
+        # If no recipes are found in the session, fetch details from the API based on recipe IDs.
+        recipes = fetch_spoon_api(
+            "https://api.spoonacular.com/recipes/informationBulk",
+            {"ids": ",".join(map(str, user_recipes_ids))},
+        )
+
+    session["recipes"] = recipes
+
     session.pop("recipes", None)
 
     return render_template("main.html", username=current_user.username, recipes=recipes)
@@ -287,9 +298,9 @@ def set_preferences():
     return redirect(url_for("main"))
 
 
-@app.route("/show_recipes", methods=["POST"])
+@app.route("/search_recipes", methods=["POST"])
 @login_required
-def show_recipes():
+def search_recipes():
     """
     The function fetches recipes from the Spoonacular API, excluding any ingredients
     that the current user has disliked, and stores the recipes in the session.
@@ -298,14 +309,15 @@ def show_recipes():
     # Fetch current user's disliked ingredients from db
     user_preferences = users.find_one({"_id": current_user._id})
     disliked_ingredients = user_preferences.get("disliked_ingredients", "")
+    searchQuery = request.form.get("search_query", "")
 
     recipes = fetch_spoon_api(
         "https://api.spoonacular.com/recipes/complexSearch",
-        {"excludeIngredients": disliked_ingredients, "number": "5"},
+        {"excludeIngredients": disliked_ingredients, "number": "6", "titleMatch": searchQuery},
     ).get("results", [])
 
     for recipe in recipes:
-        recipe["url"] = fetch_spoon_api(
+        recipe["sourceUrl"] = fetch_spoon_api(
             f"https://api.spoonacular.com/recipes/{recipe['id']}/information"
         ).get("sourceUrl", "")
 
