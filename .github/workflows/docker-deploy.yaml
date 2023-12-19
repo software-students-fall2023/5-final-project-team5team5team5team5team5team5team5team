@@ -34,8 +34,10 @@ jobs:
 
       - name: Build and Push Web-App Docker Image
         run: |
-          docker build -f web_app/Dockerfile -t js11692/web_app:latest ./web_app
+          export DOCKER_BUILDKIT=1
+          docker build -t js11692/web_app:latest ./web_app
           docker push js11692/web_app:latest
+
 
       - name: Build and Push MongoDB image (to Docker Hub)
         run: |
