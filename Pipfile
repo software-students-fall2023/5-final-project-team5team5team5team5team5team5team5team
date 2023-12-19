@@ -11,7 +11,7 @@ requests = "*"
 pylint = "*"
 chardet = "*"
 flask-login = "*"
-flask-pymongo = "*"
+flask-pymongo = "==2.3.0"
 
 [dev-packages]
 pylint = "*"
